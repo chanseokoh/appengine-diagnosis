@@ -1,3 +1,4 @@
+import com.google.cloud.tools.appengine.operations.cloudsdk.serialization.CloudSdkComponent;
 import com.google.cloud.tools.managedcloudsdk.ManagedCloudSdk;
 import com.google.cloud.tools.managedcloudsdk.ManagedSdkVerificationException;
 import com.google.cloud.tools.managedcloudsdk.ManagedSdkVersionMismatchException;
@@ -26,5 +27,9 @@ public class Main {
     System.out.println("BEGIN result");
     System.out.println(result);
     System.out.println("END result");
+
+    for (CloudSdkComponent component : CloudSdkComponent.fromJsonList(result)) {
+      System.out.println("name: " + component.getName());
+    }
   }
 }
