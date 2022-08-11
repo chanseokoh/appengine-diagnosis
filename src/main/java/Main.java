@@ -23,10 +23,21 @@ public class Main {
     List<String> cmd = Arrays.asList(sdk.getGcloudPath().toString(),
         "components", "list", "--format=json", "--filter=state.name:Update Available");
 
-    String result = CommandCaller.newCaller().call(cmd, null, null);
-    System.out.println("BEGIN result");
-    System.out.println(result);
-    System.out.println("END result");
+    String result = null;
+    try {
+      result = CommandCaller.newCaller().call(cmd, null, null);
+      System.out.println("BEGIN result");
+      System.out.println(result);
+      System.out.println("END result");
+    } catch (CommandExitException e) {
+      System.out.println("*** CommandExitException; error log = [" + e.getErrorLog() + "] ***");
+      e.printStackTrace();
+    } catch (CommandExecutionException e) {
+      System.out.println("*** CommandExecutionException; error log = [" + e.getErrorLog() + "] ***");
+      e.printStackTrace();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
 
     for (CloudSdkComponent component : CloudSdkComponent.fromJsonList(result)) {
       System.out.println("name: " + component.getName());
